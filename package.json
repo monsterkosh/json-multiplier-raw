@@ -1,0 +1,25 @@
+{
+  "name": "json-multiplier-raw",
+  "version": "1.0.0",
+  "description": "Raw version of the JSON Multiplier NPM Package",
+  "main": "jsonX.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/monsterkosh/json-multiplier-raw.git"
+  },
+  "keywords": [
+    "json",
+    "multiply",
+    "multiplier",
+    "duplicate"
+  ],
+  "author": "Emiliano Kosh",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/monsterkosh/json-multiplier-raw/issues"
+  },
+  "homepage": "https://github.com/monsterkosh/json-multiplier-raw#readme"
+}
