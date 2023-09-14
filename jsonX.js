@@ -1,6 +1,6 @@
 const fs = require('fs');
 
-function showHelp() {
+async function showHelp() {
   console.log(`Grab a JSON file with only 1 object inside, and put this file inside the repository folder.
   Type in terminal $ node jsonX.js --run  with the following arguments:
   
@@ -29,7 +29,7 @@ function runJsonX(file, multiplier, indexName) {
       flag: 'r',
     });
   } catch {
-    console.log(`Error: cannot read file "${file}" or file does not exists`);
+    console.log(`Error: cannot read file "${file}" or file does not exist`);
     return;
   }
 
@@ -39,43 +39,35 @@ function runJsonX(file, multiplier, indexName) {
   }
 
   const data = JSON.parse(json);
-  const result = [];
   const indexValue = '000000000000000000000000';
 
-  if (indexName) {
-    indexName = String(indexName);
-    for (let i = 0; i < multiplier; i++) {
-      const element = Object.assign({}, data[0]);
-      element[indexName] = indexValue + i;
+  const result = [];
 
-      result.push(element);
-    }
-  } else {
-    for (let i = 0; i < multiplier; i++) {
-      const element = Object.assign({}, data[0]);
-      element._id = { $oid: indexValue + i };
+  for (let i = 0; i < multiplier; i++) {
+    const duplicate = JSON.parse(JSON.stringify(data));
 
-      result.push(element);
+    if (indexName) {
+      duplicate[indexName] = indexValue + i;
+    } else {
+      duplicate._id = { $oid: indexValue + i };
     }
+
+    result.push(duplicate);
   }
 
-  const jsonResult = JSON.stringify(result);
   const ogFileName = file.toString().slice(0, -5);
   const resultFileName = `jsonX-${ogFileName}-${multiplier}.json`;
 
   try {
-    fs.writeFileSync(resultFileName, jsonResult);
+    fs.writeFileSync(resultFileName, JSON.stringify(result, null, 2));
+    console.log(
+      `JSON file "${ogFileName}" was multiplied by ${multiplier} using ${indexName ?? '_id'
+      } as index`
+    );
+    console.log(`Results saved under the name "${resultFileName}" `);
   } catch (error) {
-    console.log(`There was a error saving results`);
+    console.log(`There was an error saving results`);
   }
-
-  console.log(
-    `JSON file "${ogFileName}" was multiplied by ${multiplier} using ${
-      indexName ?? '_id'
-    } as index`
-  );
-
-  console.log(`Results saved under the name "${resultFileName}" `);
 }
 
 (function main() {
