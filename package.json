@@ -1,6 +1,6 @@
 {
   "name": "json-multiplier-raw",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Raw version of the JSON Multiplier NPM Package",
   "main": "jsonX.js",
   "scripts": {
